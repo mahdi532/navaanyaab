@@ -40,7 +40,6 @@ async function sendTelegram(message) {
         return;
     }
     try {
-        // URL بدون فاصله
         await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -146,7 +145,7 @@ app.get('/api/stocks', (req, res) => {
 const KEEP_ALIVE_URL = process.env.KOYEB_EXTERNAL_URL;
 if (KEEP_ALIVE_URL) {
     console.log(`🌐 تلاش برای فعال‌سازی Keep-Alive به URL: ${KEEP_ALIVE_URL}`);
-    // پینگ شدن هر 10 دقیقه یکبار (600000 میلی‌ثانیه)
+    // پینگ شدن هر 10 دقیقه یکبار
     setInterval(() => {
         fetch(KEEP_ALIVE_URL)
             .then(res => console.log(`✅ خودپینگ موفقیت‌آمیز. وضعیت: ${res.status}`))
