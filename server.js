@@ -34,12 +34,11 @@ let globalResults = [];
 // توابع
 // ------------------------------------------------------------------
 
-async function sendTelegram(message) {
-    if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
-        console.log("⚠️ توکن تلگرام تنظیم نشده است. فقط داشبورد فعال است.");
+console.log("⚠️ توکن تلگرام تنظیم نشده است. فقط داشبورد فعال است.");
         return;
     }
     try {
+        // ✅ URL صحیح (بدون فاصله)
         await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -172,4 +171,5 @@ app.listen(PORT, () => {
     setInterval(mainLoop, 30000); // اجرای دوره‌ای
     // ------------------------------------------------------------------
 });
+
 
