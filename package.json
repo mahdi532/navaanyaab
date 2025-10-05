@@ -15,21 +15,3 @@
     "node-fetch": "^2.7.0"
   }
 }
-=======
-{
-  "name": "navaanyaab-trading-new",
-  "version": "1.0.0",
-  "main": "server.js",
-  "scripts": {
-    "start": "npm install && node server.js"
-  },
-  "dependencies": {
-    "express": "^4.19.2",
-    "axios": "^1.7.2",
-    "cors": "^2.8.5",
-    "node-fetch": "^2.7.0",
-    "dotenv": "^16.4.5"
-  }
-}
-
- f69e80a47568922a0cbc5d8cc8042584568ac778
