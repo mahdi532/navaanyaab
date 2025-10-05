@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NavaanYaab</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white p-4">
+  <h1 class="text-2xl font-bold text-green-400 mb-4">📊 سهام نوسانی هوشمند</h1>
+  <div id="stocks">در حال بارگذاری...</div>
+
+  <script>
+    async function load() {
+      const res = await fetch('/api/stocks');
+      const { stocks, timestamp } = await res.json();
+      const container = document.getElementById('stocks');
+      
+      let htmlContent = `<div class="text-xs text-gray-500 mb-2">آخرین بروزرسانی: ${timestamp}</div>`;
+
+      if (stocks.length === 0) {
+        htmlContent += '<p class="text-gray-400">سهم نوسانی با امتیاز بالا یافت نشد.</p>';
+      } else {
+        htmlContent += stocks.map(s => `
+          <div class="bg-gray-800 p-3 rounded mb-3 border border-green-500/30">
+            <h2 class="text-lg font-bold text-green-300">${s.name}</h2>
+            <p>امتیاز: <span class="text-yellow-400">${s.score}/100</span></p>
+            <p>قیمت: ${s.lastPrice.toLocaleString()} تومان</p>
+          </div>
+        `).join('');
+      }
+      container.innerHTML = htmlContent;
+    }
+    load();
+    setInterval(load, 10000);
+  </script>
+</body>
+</html>
