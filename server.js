@@ -7,7 +7,9 @@ const fetch = require('node-fetch');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+app.get('/', (req, res) => {
+    res.send('Your Telegram Bot App is running and healthy!');
+});
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
@@ -167,3 +169,4 @@ app.listen(PORT, () => {
     setInterval(mainLoop, 30000); // اجرای دوره‌ای
     // ------------------------------------------------------------------
 });
+
