@@ -1,3 +1,4 @@
+require('dotenv').config();
 
 const express = require('express');
 const axios = require('axios');
@@ -7,9 +8,8 @@ const fetch = require('node-fetch');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 🔑 تنظیمات تلگرام
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "YOUR_BOT_TOKEN";
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "YOUR_CHAT_ID";
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 app.use(cors());
 app.use(express.static('public'));
@@ -34,11 +34,13 @@ let globalResults = [];
 // توابع
 // ------------------------------------------------------------------
 
-console.log("⚠️ توکن تلگرام تنظیم نشده است. فقط داشبورد فعال است.");
+async function sendTelegram(message) {
+    if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+        console.log("⚠️ توکن تلگرام تنظیم نشده است. فقط داشبورد فعال است.");
         return;
     }
     try {
-        // ✅ URL صحیح (بدون فاصله)
+        // URL بدون فاصله
         await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -102,10 +104,6 @@ function calculateScore(stock) {
 // 🎯 تابع اصلی نوسان‌گیری (Main Loop)
 // ------------------------------------------------------------------
 async function mainLoop() {
-    if (TELEGRAM_BOT_TOKEN === "YOUR_BOT_TOKEN") {
-        console.log("⚠️ توکن تلگرام تنظیم نشده است. فقط داشبورد فعال است.");
-    }
-    
     const now = new Date().toLocaleTimeString('fa-IR');
     const tempResults = [];
 
@@ -132,7 +130,6 @@ async function mainLoop() {
     // تمیز کردن لیست هشدارها به صورت دوره‌ای (1% شانس)
     if (Math.random() < 0.01) {
         lastAlerted.clear();
-        console.log('✅ لیست هشدارهای تلگرام تمیز شد.');
     }
 }
 
@@ -171,5 +168,3 @@ app.listen(PORT, () => {
     setInterval(mainLoop, 30000); // اجرای دوره‌ای
     // ------------------------------------------------------------------
 });
-
-
